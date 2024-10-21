@@ -15,5 +15,9 @@
     "url": "https://github.com/PietroSM/Pr-ctica_1_Desplegament-/issues"
   },
   "homepage": "https://github.com/PietroSM/Pr-ctica_1_Desplegament-#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongoose": "^8.7.1"
+  }
 }
