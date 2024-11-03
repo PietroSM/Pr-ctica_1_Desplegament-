@@ -43,4 +43,8 @@ let recordSchema = new mongoose.Schema({
 });
 
 let Record = mongoose.model('records', recordSchema);
-module.exports = Record;
+let Appointment = mongoose.model('appointments', appointmentsSchema);
+module.exports = {
+    Record,
+    Appointment
+};

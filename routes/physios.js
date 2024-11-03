@@ -97,7 +97,7 @@ router.put('/:id', async (req, res) => {
 //Eliminar un fisioterapeuta.(Probar)
 router.delete('/:id', async (req, res) => {
     try{
-        const resultat = await Physio.findByIdAndRemove(req.params.id);
+        const resultat = await Physio.findByIdAndDelete(req.params.id);
 
         if(resultat){
             res.status(200).send({ok:true, resultat: resultat});

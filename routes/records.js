@@ -1,6 +1,6 @@
 const express = require('express');
 
-let Record = require(__dirname + "/../models/record.js");
+const { Appointment, Record } = require(__dirname + "/../models/record.js");
 let Patient = require(__dirname + "/../models/patient.js");
 
 let router = express.Router();
@@ -48,7 +48,18 @@ router.get('/find' , async(req, res) => {
 });
 
 //Obtindre detalls d'un expedient especific.
-
+router.get('/:id', async (req, res) => {
+    try{
+        const resultat = await Record.findById(req.params.id);
+        if(resultat){
+            res.status(200).send({ok: true, resultat: resultat});
+        }else{
+            res.status(404).send({ok: false, error: "No hi ha expedient amb aquests criteris de cognom"});
+        }
+    } catch (error){
+        res.status(500).send({ok: false, error: "Error buscant el record indicat"});
+    }
+});
 
 
 //Inserir un expedient mèdic.
@@ -63,6 +74,49 @@ router.post('/', async (req, res) => {
         res.status(201).send({ok:true, resultat: resultat});
     }catch (error){
         res.status(400).send({ok:false, resultat:"Error al inserir un expedient"});
+    }
+});
+
+
+
+//Afegir consultes a un expedient
+router.post('/:id/appointments', async (req, res) => {
+    try{
+        let nouAppointment = new Appointment({
+            date : new Date(req.body.date),
+            physio: req.body.physio,
+            diagnosis: req.body.diagnosis,
+            treatment:req.body.treatment,
+            observations: req.body.observations
+        });
+    
+        const AfegirAppointment = await Record.findByIdAndUpdate(
+            req.params.id,
+            { $push: { appointments: nouAppointment } },
+            { new: true }
+        );
+
+        if(!AfegirAppointment){
+            res.status(404).send({ok:false, error: "No s'ha trobat expedient"});
+        }
+        res.status(201).send({ok:true, resultat: AfegirAppointment});
+    }catch (error){
+        res.status(500).send({ok: false, error: "Error al afegir la cita"});
+    }
+});
+
+
+//Eliminar un expedient medic
+router.delete('/:id', async (req, res) => {
+    try{
+        const resultat = await Record.findByIdAndDelete(req.params.id);
+        if(resultat){
+            res.status(200).send({ok:true, resultat: resultat});
+        }else{
+            res.status(404).send({ok:false, resultat: "Error, no es troba el Expedient"});
+        }
+    }catch (error){
+        res.status(500).send({ok: false, error: "Error Servidor"});
     }
 });
 
