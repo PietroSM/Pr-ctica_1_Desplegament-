@@ -53,7 +53,7 @@ router.get('/:id', async (req, res) => {
 });
 
 
-//Insertar un fisioterapeuta.(Probar)
+//Insertar un fisioterapeuta.
 router.post('/', async (req, res) =>{
     try{
         let nouPhysio = new Physio({
@@ -71,7 +71,7 @@ router.post('/', async (req, res) =>{
 });
 
 
-//Actualitza les dades a un fisioterapeuta.(Probar)
+//Actualitza les dades a un fisioterapeuta.
 router.put('/:id', async (req, res) => {
     try{
 
@@ -94,7 +94,7 @@ router.put('/:id', async (req, res) => {
 });
 
 
-//Eliminar un fisioterapeuta.(Probar)
+//Eliminar un fisioterapeuta.
 router.delete('/:id', async (req, res) => {
     try{
         const resultat = await Physio.findByIdAndDelete(req.params.id);
