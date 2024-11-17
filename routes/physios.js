@@ -1,12 +1,13 @@
 const express = require('express');
 
 let Physio = require(__dirname + "/../models/physio.js");
-
+const auth = require(__dirname + '/../auth/auth');
+const User = require(__dirname + '/../models/user.js');
 let router = express.Router();
 
 
-//Llistat de tots els fisioterapeutes.
-router.get('/', async (req, res) => {
+//Llistat de tots els fisioterapeutes. ✓
+router.get('/', auth.protegirRuta(["admin", "physio", "patient"]), async (req, res) => {
     try{
         const resultat = await Physio.find();
 
@@ -20,8 +21,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Buscar fisioterapeutes per especialitats
-router.get('/find', async (req, res) =>{
+
+//Buscar fisioterapeutes per especialitats. ✓
+router.get('/find', auth.protegirRuta(["admin", "physio", "patient"]), async (req, res) =>{
     try{
         const resultat = await Physio.find({
             specialty: { $regex: req.query.specialty, $options: 'i' }
@@ -38,8 +40,8 @@ router.get('/find', async (req, res) =>{
 });
 
 
-//Detalls d'un fisioterapeuta especific
-router.get('/:id', async (req, res) => {
+//Detalls d'un fisioterapeuta especific. ✓
+router.get('/:id', auth.protegirRuta(["admin", "physio", "patient"]), async (req, res) => {
     try{
         const resultat = await Physio.findById(req.params.id);
         if(resultat){
@@ -53,10 +55,20 @@ router.get('/:id', async (req, res) => {
 });
 
 
-//Insertar un fisioterapeuta.
-router.post('/', async (req, res) =>{
+//Insertar un fisioterapeuta. ✓
+router.post('/', auth.protegirRuta(["admin"]), async (req, res) =>{
     try{
+        let nouUsuari = new User({
+            login: req.body.login,
+            password: req.body.password,
+            rol: "physio"
+        });
+
+        const resultatUsuari = await nouUsuari.save();
+        const idUsuari = resultatUsuari._id;
+
         let nouPhysio = new Physio({
+            _id: idUsuari,
             name: req.body.name,
             surname: req.body.surname,
             specialty: req.body.specialty,
@@ -71,8 +83,8 @@ router.post('/', async (req, res) =>{
 });
 
 
-//Actualitza les dades a un fisioterapeuta.
-router.put('/:id', async (req, res) => {
+//Actualitza les dades a un fisioterapeuta. ✓
+router.put('/:id', auth.protegirRuta(["admin"]), async (req, res) => {
     try{
 
         const resultat = await Physio.findByIdAndUpdate(req.params.id, {
@@ -94,8 +106,8 @@ router.put('/:id', async (req, res) => {
 });
 
 
-//Eliminar un fisioterapeuta.
-router.delete('/:id', async (req, res) => {
+//Eliminar un fisioterapeuta. ✓
+router.delete('/:id', auth.protegirRuta(["admin"]), async (req, res) => {
     try{
         const resultat = await Physio.findByIdAndDelete(req.params.id);
 
@@ -108,6 +120,7 @@ router.delete('/:id', async (req, res) => {
         res.status(500).send({ok: false, error: "Error Servidor"});
     }
 });
+
 
 
 module.exports = router;

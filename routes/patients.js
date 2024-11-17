@@ -1,12 +1,13 @@
 const express = require('express');
 
 let Patient = require(__dirname + "/../models/patient.js");
-
+const auth = require(__dirname + '/../auth/auth');
+const User = require(__dirname + '/../models/user.js');
 let router = express.Router();
 
 
-//Llistat de tots els pacients.
-router.get('/', async (req, res) => {
+//Llistat de tots els pacients. ✓
+router.get('/', auth.protegirRuta(["admin", "physio", "patient"]), async (req, res) => {
     try{
         const resultat = await Patient.find();
 
@@ -21,8 +22,8 @@ router.get('/', async (req, res) => {
 });
 
 
-//Buscar Pacients per nom o cognoms.
-router.get('/find' , async(req, res) => {
+//Buscar Pacients per nom o cognoms. ✓
+router.get('/find', auth.protegirRuta(["admin", "physio"]), async(req, res) => {
     try{
         const resultat = await
         Patient.find({
@@ -40,9 +41,9 @@ router.get('/find' , async(req, res) => {
 });
 
 
-
-//Detalls d'un pacient especific.
-router.get('/:id', async (req, res) =>{
+//Detalls d'un pacient especific. ✓
+router.get('/:id', auth.protegirRuta(["admin", "physio", "patient"]),
+auth.protegirRutaIdPatient(), async (req, res) =>{
     try{
         const resultat = await Patient.findById(req.params.id);
         if(resultat){
@@ -56,10 +57,21 @@ router.get('/:id', async (req, res) =>{
 });
 
 
-//Insertar un pacient.
-router.post('/', async (req, res) =>{
+//Insertar un pacient. ✓
+router.post('/', auth.protegirRuta(["admin", "physio"]), async (req, res) =>{
     try{
+
+        let nouUsuari = new User({
+            login: req.body.login,
+            password: req.body.password,
+            rol: "patient"
+        });
+
+        const resultatUsuari = await nouUsuari.save();
+        const idUsuari = resultatUsuari._id;
+
         let nouPatient = new Patient({
+            _id: idUsuari,
             name: req.body.name,
             surname: req.body.surname,
             birthDate: new Date(req.body.birthDate),
@@ -68,6 +80,7 @@ router.post('/', async (req, res) =>{
         });
 
         const resultat = await nouPatient.save();
+
         res.status(201).send({ok:true, resultat: resultat});
     }catch(error){
         res.status(400).send({ok:false, resultat:"Error al inserir un pacient"});
@@ -75,8 +88,8 @@ router.post('/', async (req, res) =>{
 });
 
 
-//Actualitza les dades a un pacient.
-router.put('/:id', async (req, res) => {
+//Actualitza les dades a un pacient. ✓
+router.put('/:id',auth.protegirRuta(["admin", "physio"]), async (req, res) => {
     try{
 
         const resultat = await Patient.findByIdAndUpdate(req.params.id, {
@@ -97,7 +110,6 @@ router.put('/:id', async (req, res) => {
         res.status(500).send({ok: false, error: "Error Servidor"});
     }
 });
-
 
 
 

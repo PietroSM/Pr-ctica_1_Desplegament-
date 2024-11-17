@@ -2,12 +2,13 @@ const express = require('express');
 
 const { Appointment, Record } = require(__dirname + "/../models/record.js");
 let Patient = require(__dirname + "/../models/patient.js");
-
+const auth = require(__dirname + '/../auth/auth');
+const User = require(__dirname + '/../models/user.js');
 let router = express.Router();
 
 
-//Obtindre tots els expedients mèdics
-router.get('/', async (req, res) => {
+//Obtindre tots els expedients mèdics. ✓
+router.get('/', auth.protegirRuta(["admin", "physio"]), async (req, res) => {
     try{
         const resultat = await Record.find();
 
@@ -22,8 +23,8 @@ router.get('/', async (req, res) => {
 });
 
 
-//Buscar expedients per nom de pacient.
-router.get('/find' , async(req, res) => {
+//Buscar expedients per nom de pacient.✓
+router.get('/find', auth.protegirRuta(["admin", "physio"]), async(req, res) => {
     try{
         const resultatPatient = await
         Patient.find({
@@ -47,11 +48,13 @@ router.get('/find' , async(req, res) => {
     }
 });
 
-//Obtindre detalls d'un expedient especific.
-router.get('/:id', async (req, res) => {
+
+//Obtindre detalls d'un expedient especific. ✓
+router.get('/:id', auth.protegirRuta(["admin", "physio", "patient"]),
+auth.protegirRutaIdPatient(), async (req, res) => {
     try{
-        const resultat = await Record.findById(req.params.id);
-        if(resultat){
+        const resultat = await Record.find({patient: req.params.id});
+        if(resultat.length > 0){
             res.status(200).send({ok: true, resultat: resultat});
         }else{
             res.status(404).send({ok: false, error: "No hi ha expedient amb aquests criteris de cognom"});
@@ -62,8 +65,8 @@ router.get('/:id', async (req, res) => {
 });
 
 
-//Inserir un expedient mèdic.
-router.post('/', async (req, res) => {
+//Inserir un expedient mèdic. ✓
+router.post('/', auth.protegirRuta(["admin", "physio"]), async (req, res) => {
     try{
         let nouRecords = new Record({
             patient: req.body.patient,
@@ -78,9 +81,8 @@ router.post('/', async (req, res) => {
 });
 
 
-
-//Afegir consultes a un expedient
-router.post('/:id/appointments', async (req, res) => {
+//Afegir consultes a un expedient. ✓
+router.post('/:id/appointments', auth.protegirRuta(["admin", "physio"]), async (req, res) => {
     try{
         let nouAppointment = new Appointment({
             date : new Date(req.body.date),
@@ -90,8 +92,8 @@ router.post('/:id/appointments', async (req, res) => {
             observations: req.body.observations
         });
     
-        const AfegirAppointment = await Record.findByIdAndUpdate(
-            req.params.id,
+        const AfegirAppointment = await Record.findOneAndUpdate(
+            {patient: req.params.id},
             { $push: { appointments: nouAppointment } },
             { new: true }
         );
@@ -106,10 +108,10 @@ router.post('/:id/appointments', async (req, res) => {
 });
 
 
-//Eliminar un expedient medic
-router.delete('/:id', async (req, res) => {
+//Eliminar un expedient medic. ✓
+router.delete('/:id', auth.protegirRuta(["admin", "physio"]), async (req, res) => {
     try{
-        const resultat = await Record.findByIdAndDelete(req.params.id);
+        const resultat = await Record.findOnedAndDelete({patient: req.params.id});
         if(resultat){
             res.status(200).send({ok:true, resultat: resultat});
         }else{
@@ -119,6 +121,7 @@ router.delete('/:id', async (req, res) => {
         res.status(500).send({ok: false, error: "Error Servidor"});
     }
 });
+
 
 
 module.exports = router;
