@@ -1,21 +1,19 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+
 const auth = require(__dirname + '/../auth/auth.js');
-
-let router = express.Router();
-
 const User = require(__dirname + '/../models/user.js');
 
+let router = express.Router();
 
 router.post('/login', async (req, res) => {
     let login = req.body.login;
     let password = req.body.password;
     let existeixUsuari = await User.findOne({
         login: login,
-        password: password
+        // password: password
     })
-        // User.filter(u =>{u.login === login && u.password === password});
-    
-    if(existeixUsuari){
+    if(existeixUsuari && bcrypt.compareSync(password,existeixUsuari.password)){
         res.status(200).send({
             ok: true,
             token: auth.generarToken(existeixUsuari.id ,login, existeixUsuari.rol)

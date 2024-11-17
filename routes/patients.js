@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 
 let Patient = require(__dirname + "/../models/patient.js");
 const auth = require(__dirname + '/../auth/auth');
@@ -60,10 +61,11 @@ auth.protegirRutaIdPatient(), async (req, res) =>{
 //Insertar un pacient. ✓
 router.post('/', auth.protegirRuta(["admin", "physio"]), async (req, res) =>{
     try{
+        const hash = bcrypt.hashSync(req.body.password, 10);
 
         let nouUsuari = new User({
             login: req.body.login,
-            password: req.body.password,
+            password: hash,
             rol: "patient"
         });
 
