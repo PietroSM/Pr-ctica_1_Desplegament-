@@ -12,7 +12,7 @@ router.get('/', auth.protegirRuta(["admin", "physio", "patient"]), async (req, r
         const resultat = await Physio.find();
 
         if(resultat.length > 0){
-            res.status(200).send({ok: true, resultat: resultat});
+            res.status(200).send({ok: true, result: resultat});
         }else{
             res.status(404).send({ok: false, error: "No hi ha fisioterapeutes en el sistema"});
         }
@@ -30,7 +30,7 @@ router.get('/find', auth.protegirRuta(["admin", "physio", "patient"]), async (re
         });
 
         if(resultat.length > 0){
-            res.status(200).send({ok: true, resultat: resultat});
+            res.status(200).send({ok: true, result: resultat});
         }else{
             res.status(404).send({ok: false, error: "No hi ha fisioterapeutes amb aquests criteris"});
         }
@@ -45,7 +45,7 @@ router.get('/:id', auth.protegirRuta(["admin", "physio", "patient"]), async (req
     try{
         const resultat = await Physio.findById(req.params.id);
         if(resultat){
-            res.status(200).send({ok: true, resultat: resultat});
+            res.status(200).send({ok: true, result: resultat});
         }else{
             res.status(404).send({ok: false, error: "No hi ha fisioterapeutes amb aquests criteris de cognom"});
         }
@@ -76,9 +76,9 @@ router.post('/', auth.protegirRuta(["admin"]), async (req, res) =>{
         });
 
         const resultat = await nouPhysio.save();
-        res.status(201).send({ok:true, resultat: resultat});
+        res.status(201).send({ok:true, result: resultat});
     }catch(error){
-        res.status(400).send({ok:false, resultat:"Error al inserir un fisioterapeuta"});
+        res.status(400).send({ok:false, error:"Error al inserir un fisioterapeuta"});
     }
 });
 
@@ -96,9 +96,9 @@ router.put('/:id', auth.protegirRuta(["admin"]), async (req, res) => {
             }}, {new: true});
         
         if(resultat){
-            res.status(200).send({ok:true, resultat: resultat});
+            res.status(200).send({ok:true, result: resultat});
         }else{
-            res.status(400).send({ok:false, resultat: "Error, no es troba el fisioterapeuta"});
+            res.status(400).send({ok:false, result: "Error, no es troba el fisioterapeuta"});
         }
     } catch(error){
         res.status(500).send({ok: false, error: "Error Servidor"});
@@ -112,9 +112,9 @@ router.delete('/:id', auth.protegirRuta(["admin"]), async (req, res) => {
         const resultat = await Physio.findByIdAndDelete(req.params.id);
 
         if(resultat){
-            res.status(200).send({ok:true, resultat: resultat});
+            res.status(200).send({ok:true, result: resultat});
         }else{
-            res.status(404).send({ok:false, resultat: "Error, no es troba el fisioterapeuta"});
+            res.status(404).send({ok:false, result: "Error, no es troba el fisioterapeuta"});
         }
     }catch (error){
         res.status(500).send({ok: false, error: "Error Servidor"});
