@@ -25,10 +25,10 @@ let protegirRuta = rol => {
             next();
         }
         else{
-            res.status(403).send({ok: false, error: "Accés no autoritzat 1"});    
+            res.status(403).send({error: "Accés no autoritzat 1"});    
         }    
     } else {
-        res.status(403).send({ok: false, error: "Accés no autoritzat 2"});  
+        res.status(403).send({error: "Accés no autoritzat 2"});  
     }      
 }};
 
@@ -46,10 +46,10 @@ let protegirRutaIdPatient = () => {
                 next();
             }
             else{
-                res.status(403).send({ok: false, error: "Accés no autoritzat 3"});
+                res.status(403).send({error: "Accés no autoritzat 3"});
             }
         } else {
-            res.status(403).send({ok: false, error: "Accés no autoritzat 4"});    
+            res.status(403).send({error: "Accés no autoritzat 4"});    
         }
 }};
 

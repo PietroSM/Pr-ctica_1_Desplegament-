@@ -15,7 +15,7 @@ router.post('/login', async (req, res) => {
     if(existeixUsuari && bcrypt.compareSync(password,existeixUsuari.password)){
         res.status(200).send({result: auth.generarToken(existeixUsuari.id ,login, existeixUsuari.rol)});
     }else{
-        res.status(401).send({ok: false, error: "login incorrecte"});
+        res.status(401).send({error: "login incorrecte"});
     }
 
 });

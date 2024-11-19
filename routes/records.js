@@ -13,12 +13,12 @@ router.get('/', auth.protegirRuta(["admin", "physio"]), async (req, res) => {
         const resultat = await Record.find();
 
         if(resultat.length > 0){
-            res.status(200).send({ok: true, result: resultat});
+            res.status(200).send({result: resultat});
         }else{
-            res.status(404).send({ok: false, error: "No hi ha expedients mèdics en el sistema"});
+            res.status(404).send({error: "No hi ha expedients mèdics en el sistema"});
         }
     }catch (error){
-        res.status(500).send({ok: false, error: "Error obtenint expedients mèdics"});
+        res.status(500).send({error: "Error obtenint expedients mèdics"});
     }
 });
 
@@ -39,12 +39,12 @@ router.get('/find', auth.protegirRuta(["admin", "physio"]), async(req, res) => {
         
     
         if(resultatRecord.length > 0){
-            res.status(200).send({ok: true, result: resultatRecord});
+            res.status(200).send({result: resultatRecord});
         }else{
-            res.status(404).send({ok: false, error: "No hi ha expedients amb aquests criteris"});
+            res.status(404).send({error: "No hi ha expedients amb aquests criteris"});
         }
     }catch (error){
-        res.status(500).send({ok: false, error: "Error buscant el expedient indicat"});
+        res.status(500).send({error: "Error buscant el expedient indicat"});
     }
 });
 
@@ -55,12 +55,12 @@ auth.protegirRutaIdPatient(), async (req, res) => {
     try{
         const resultat = await Record.find({patient: req.params.id});
         if(resultat.length > 0){
-            res.status(200).send({ok: true, result: resultat});
+            res.status(200).send({result: resultat});
         }else{
-            res.status(404).send({ok: false, error: "No hi ha expedient amb aquests criteris de cognom"});
+            res.status(404).send({error: "No hi ha expedient amb aquests criteris de cognom"});
         }
     } catch (error){
-        res.status(500).send({ok: false, error: "Error buscant el record indicat"});
+        res.status(500).send({error: "Error buscant el record indicat"});
     }
 });
 
@@ -74,9 +74,9 @@ router.post('/', auth.protegirRuta(["admin", "physio"]), async (req, res) => {
         });
 
         const resultat = await nouRecords.save();
-        res.status(201).send({ok:true, result: resultat});
+        res.status(201).send({result: resultat});
     }catch (error){
-        res.status(400).send({ok:false, result:"Error al inserir un expedient"});
+        res.status(400).send({result:"Error al inserir un expedient"});
     }
 });
 
@@ -99,11 +99,11 @@ router.post('/:id/appointments', auth.protegirRuta(["admin", "physio"]), async (
         );
 
         if(!AfegirAppointment){
-            res.status(404).send({ok:false, error: "No s'ha trobat expedient"});
+            res.status(404).send({error: "No s'ha trobat expedient"});
         }
-        res.status(201).send({ok:true, result: AfegirAppointment});
+        res.status(201).send({result: AfegirAppointment});
     }catch (error){
-        res.status(500).send({ok: false, error: "Error al afegir la cita"});
+        res.status(500).send({error: "Error al afegir la cita"});
     }
 });
 
@@ -113,12 +113,12 @@ router.delete('/:id', auth.protegirRuta(["admin", "physio"]), async (req, res) =
     try{
         const resultat = await Record.findOnedAndDelete({patient: req.params.id});
         if(resultat){
-            res.status(200).send({ok:true, result: resultat});
+            res.status(200).send({result: resultat});
         }else{
-            res.status(404).send({ok:false, result: "Error, no es troba el Expedient"});
+            res.status(404).send({result: "Error, no es troba el Expedient"});
         }
     }catch (error){
-        res.status(500).send({ok: false, error: "Error Servidor"});
+        res.status(500).send({error: "Error Servidor"});
     }
 });
 
