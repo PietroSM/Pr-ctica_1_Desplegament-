@@ -1,0 +1,483 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "PhysioCare",
+    "collectionId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+    "dateExported": "2024-11-11T16:42:54.726Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "c0bdb095-7f3c-4f06-a442-a8f6b99eab31",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Patients",
+            "url": "/patients/",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-11-02T10:48:55.818Z",
+            "modified": "2024-11-10T11:23:00.114Z",
+            "headers": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "contains",
+                    "value": "["
+                }
+            ]
+        },
+        {
+            "_id": "53f6675a-8e8f-4bdb-90ef-8fda2fcc074e",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Patient_Especific",
+            "url": "/patients/{{idPatient}}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-11-02T11:11:06.993Z",
+            "modified": "2024-11-10T11:29:13.617Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "67166a7645b5bb1e52980413",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.resultat._id",
+                    "action": "setto",
+                    "value": "{{idPatient}}"
+                },
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "48621c88-efc7-461d-9800-8d58537f9573",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Patients_Cognoms",
+            "url": "/patients/find?surname={{cognomPatient}}",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-11-02T11:54:06.558Z",
+            "modified": "2024-11-10T11:39:37.023Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "surname",
+                    "value": "{{cognomPatient}}",
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "0be4870c-34c7-4a92-9c06-2c2e54d53e44",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Patient_Especific_404",
+            "url": "/patients/{{idPatientfalse}}",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-11-10T11:30:12.512Z",
+            "modified": "2024-11-10T11:33:21.101Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "67166a7645b5bb1e52980413",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "404"
+                }
+            ]
+        },
+        {
+            "_id": "6cf9f24d-8bee-450f-b046-eb3797a44db4",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Inserir_Patient",
+            "url": "/patients/",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-11-02T12:55:53.527Z",
+            "modified": "2024-11-10T11:48:48.487Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"John\",\n    \"surname\": \"Doe\",\n    \"birthDate\": \"1990-05-15\",\n    \"address\": \"1234 Elm Street, Springfield\",\n    \"insuranceNumber\": \"ABC123459\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "1f8b4d56-dc36-4275-9f0e-67d0de07ab1a",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Patients_Cognoms_404",
+            "url": "/patients/find?surname={{cognomPatientfalse}}",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-11-10T11:38:34.812Z",
+            "modified": "2024-11-10T11:40:30.560Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "surname",
+                    "value": "{{cognomPatientfalse}}",
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "404"
+                }
+            ]
+        },
+        {
+            "_id": "9d77906c-b362-4d47-be7d-5b4c9aa4ab78",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Actualitzar_Patient",
+            "url": "/patients/{{idPatientactu}}",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2024-11-02T13:32:36.936Z",
+            "modified": "2024-11-10T11:54:43.881Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"John2\",\n    \"surname\": \"Doe\",\n    \"birthDate\": \"1990-05-15\",\n    \"address\": \"1234 Elm Street, Springfield\",\n    \"insuranceNumber\": \"ABC123456\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "120c03c4-b696-42f9-a4db-df430a89b643",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Physios",
+            "url": "/physios/",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-11-02T19:01:29.020Z",
+            "modified": "2024-11-11T16:09:29.322Z",
+            "headers": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "2bdb8c84-84ef-4401-94f4-b60d94f7ac89",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Physios_Especialitat",
+            "url": "/physios/find?specialty={{especialitat}}",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-11-02T19:10:44.431Z",
+            "modified": "2024-11-11T16:10:56.443Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "specialty",
+                    "value": "{{especialitat}}",
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "211c32d5-5abd-40d8-ac86-18f3f0024ccb",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Physios_Id",
+            "url": "/physios/{{idPhysios}}",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-11-02T19:18:08.466Z",
+            "modified": "2024-11-11T16:13:37.538Z",
+            "headers": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "21aec495-6bf9-4309-b350-9ae9d26d66fe",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Insertar_Physios",
+            "url": "/physios/",
+            "method": "POST",
+            "sortNum": 85000,
+            "created": "2024-11-11T16:16:34.405Z",
+            "modified": "2024-11-11T16:19:02.967Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"hola\",\n  \"surname\": \"surname\",\n  \"specialty\": \"Sports\",\n  \"licenseNumber\": \"B7655321\" \n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "a9870cdc-25cb-4f5c-a6ae-ec0a67b8eb9d",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Actualitzar_physios",
+            "url": "/physios/{{idPhysios}}",
+            "method": "PUT",
+            "sortNum": 87500,
+            "created": "2024-11-11T16:21:54.384Z",
+            "modified": "2024-11-11T16:24:04.946Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"hola\",\n  \"surname\": \"surname\",\n  \"specialty\": \"Sports\",\n  \"licenseNumber\": \"B765E5321\" \n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "029e954b-0d9e-4888-ac40-ec146afbda5b",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Eliminar_Physios",
+            "url": "/physios/{{idPhysios}}",
+            "method": "DELETE",
+            "sortNum": 88750,
+            "created": "2024-11-11T16:26:06.720Z",
+            "modified": "2024-11-11T16:27:43.214Z",
+            "headers": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "96c92450-b7ea-4bab-a9df-655736ae7007",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_Records",
+            "url": "/records",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-11-02T19:51:43.533Z",
+            "modified": "2024-11-11T16:28:11.356Z",
+            "headers": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "80e2cf93-e74f-4dae-8e6e-49551b40adad",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_records_cognoms",
+            "url": "/records/find?surname={{cognomPatient}}",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-11-03T11:36:18.803Z",
+            "modified": "2024-11-11T16:33:30.892Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "surname",
+                    "value": "{{cognomPatient}}",
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "74faf6f2-7032-4d7a-9e76-8defcc9573da",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Insertar_Record",
+            "url": "/records/",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2024-11-03T12:29:15.019Z",
+            "modified": "2024-11-11T16:33:27.013Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"patient\": \"67166a7645b5bb1e52980411\",\n  \"medicalRecord\": \"Febra\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "6b7b0473-76da-4cf4-a4bd-2ec996b3c0e0",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Insertar_cita_record",
+            "url": "/records/{{idRecord}}/appointments",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2024-11-03T17:38:55.921Z",
+            "modified": "2024-11-11T16:41:29.236Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"date\": \"1990-05-15\",\n  \"physio\": \"67166a7645b5bb1e5298041b\",\n  \"diagnosis\": \"aakkvker bj bet\",\n  \"treatment\": \"dormir\",\n  \"observations\": \"ninguna\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "f04363f8-1d50-44aa-adbf-d7244cdf1ed6",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Eliminar_Expedient",
+            "url": "http://localhost:8080/records/67276d2c2314e50bb467ed21",
+            "method": "DELETE",
+            "sortNum": 150000,
+            "created": "2024-11-03T17:50:46.490Z",
+            "modified": "2024-11-11T16:42:04.402Z",
+            "headers": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "d1d8885c-c8ff-4a3a-892e-139512c6ae79",
+            "colId": "2d7ec604-41fe-48be-8b37-120def108bb7",
+            "containerId": "",
+            "name": "Obtindre_expedient_especific",
+            "url": "http://localhost:8080/records/{{idRecord}}",
+            "method": "GET",
+            "sortNum": 160000,
+            "created": "2024-11-03T17:59:22.536Z",
+            "modified": "2024-11-11T16:31:22.898Z",
+            "headers": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "localhost:8080"
+        },
+        "envId": "d94196de-9d14-4e31-8b76-3d49e3eb2b7f"
+    },
+    "ref": "yDLLjqRK8oCr9Bd1i3HPAcYYz6nWdDfikTX4f_Q4RGES_RxQIdSmsmrvCwy5wwf95OBq3SNdv7BesOsAsUlOig"
+}

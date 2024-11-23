@@ -1,0 +1,46 @@
+{
+    "clientName": "Thunder Client",
+    "environmentName": "pacients",
+    "environmentId": "d94196de-9d14-4e31-8b76-3d49e3eb2b7f",
+    "dateExported": "2024-11-11T16:43:12.516Z",
+    "version": "1.2",
+    "variables": [
+        {
+            "name": "idPatient",
+            "value": "67166a7645b5bb1e52980413"
+        },
+        {
+            "name": "idPatientfalse",
+            "value": "67166a7645b5bb1e52980414"
+        },
+        {
+            "name": "cognomPatient",
+            "value": "sanz"
+        },
+        {
+            "name": "cognomPatientfalse",
+            "value": "sansa"
+        },
+        {
+            "name": "idPatientactu",
+            "value": "6726249f0af0845fea2c9d45"
+        },
+        {
+            "name": "especialitat",
+            "value": "Sports"
+        },
+        {
+            "name": "idPhysios",
+            "value": "67166a7645b5bb1e5298041b"
+        },
+        {
+            "name": "idPhysios2",
+            "value": "67166a7645b5bb1e52980413"
+        },
+        {
+            "name": "idRecord",
+            "value": "67166a7645b5bb1e5298042d"
+        }
+    ],
+    "ref": "X5-M3R1Ro2po5f95p9OtBgyxtIACzSCXefwdyW-cSMpXXYM4BsVoJ81CKA74N6R9"
+}
